@@ -1,0 +1,3 @@
+http://www.nimbits.com/
+http://oss.oetiker.ch/rrdtool/index.en.html
+http://emoncms.org/site/home
