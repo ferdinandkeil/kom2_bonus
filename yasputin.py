@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """
 	YASPUtin
 
@@ -96,13 +98,11 @@ while 1:
 			powerUsage = round(circle.get_power_usage(), 2)
 		except ValueError:
 			print("Error: Failed to read power usage (MAC %s)!" % mac)
-			powerUsage = 0.0
 		except TimeoutException as reason:
 			print("Error: %s (MAC %s)!" % (reason, mac))
-			sys.exit(-1)
-
-		print("Power usage (%s): %.2fW" % (mac, powerUsage))
-		powerUsages[mac] = powerUsage
+		else:
+			powerUsages[mac] = powerUsage
+			print("Power usage (%s): %.2fW" % (mac, powerUsages[mac]))
 
 	# Upload data to EmonCMS
 	reqUrl = Template('http://$url/input/post.json?json={$json}&apikey=$apikey').substitute({'url': config['emoncms-url'], 'json': json.dumps(powerUsages), 'apikey': config['emoncms-apikey']})

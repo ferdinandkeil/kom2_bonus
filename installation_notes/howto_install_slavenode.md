@@ -48,23 +48,36 @@ cd
 mkdir yasputin
 cd yasputin
 wget https://raw.github.com/ferdinandkeil/kom2_bonus/master/yasputin.py
+wget https://raw.github.com/ferdinandkeil/kom2_bonus/master/yasputin.sh
 wget https://www.dropbox.com/s/31i5s1pe0mekac4/yasputin_conf.json
 # now edit the config file according to your needs
+# to get an API-key you have register an account in EmonCMS and then
+# go to Input -> Input API help
 nano yasputin_conf.json
-# to autostart the script the file /etc/rc.local has to be changed
-sudo nano /etc/rc.local
-	...
-	(cd /home/pi/yasputin/ && python yasputin.py > /dev/null) &
+# to autostart the script we will add it as a service
+chmod 755 yasputin.py
+sudo cp yasputin.sh /etc/init.d/
+sudo chmod 755 /etc/init.d/yasputin.sh
+sudo update-rc.d yasputin.sh defaults
+~~~~~~~~~~~~~~~
 
-	exit 0
+You can now start and stop the script using the following command:
+
+~~~~~~~~~~bash
+sudo /etc/init.d/yasputin.sh start|stop
 ~~~~~~~~~~~~~~~
 
 
 Finish
 ------
 
-The installation is now finished. Please make sure the Plugwise stick is connected to the Raspberry Pi and the Circle+ is plugged to an outlet. You can now restart the slave node and watch the data being uploaded on your master node.
+The installation is now finished. Please make sure the Plugwise stick is connected to the Raspberry Pi and the Circle+ is plugged to an outlet. You can now restart the slave node and watch the data being uploaded in EmonCMS.
 
 ~~~~~~~~bash
 sudo reboot
 ~~~~~~~~~~~~
+
+> *Note:*
+> If you did not install the USB-stick and Circle+ correctly, the data upload script will not start at boot. There will be no error message.
+> The same is true for errors in the configuration file. So if the data upload does not work, check the API-key and MAC adresses you entered.
+> To check if the script is running enter `sudo /etc/init.d/yasputin.sh status`.

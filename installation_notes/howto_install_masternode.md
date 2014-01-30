@@ -109,7 +109,7 @@ sudo chmod 755 /etc/init.d/timestore
 sudo update-rc.d timestore defaults
 sudo /etc/init.d/timestore restart
 cat /var/lib/timestore/adminkey.txt 
-	# note this admin key, you will need it later
+	# note the admin key, you will need it later
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
